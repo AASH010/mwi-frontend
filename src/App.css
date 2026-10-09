@@ -1,0 +1,640 @@
+/* =========================================================
+   MarsWalk Intelligence — Main Application Styles
+   File: src/App.css
+   ========================================================= */
+
+:root {
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #e8edf6;
+  background: #090e18;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --mwi-bg: #090e18;
+  --mwi-surface: #111a29;
+  --mwi-surface-raised: #172235;
+  --mwi-border: #29374c;
+  --mwi-text: #e8edf6;
+  --mwi-muted: #9baac0;
+  --mwi-accent: #70d6ff;
+  --mwi-accent-strong: #279bc9;
+  --mwi-success: #4ade80;
+  --mwi-danger: #fb7185;
+  --mwi-radius: 14px;
+  --mwi-shadow: 0 12px 32px rgb(0 0 0 / 20%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--mwi-bg);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(
+      ellipse at top left,
+      rgb(39 93 132 / 15%),
+      transparent 42%
+    ),
+    var(--mwi-bg);
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font-size: 0.95rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+button,
+input,
+select,
+textarea {
+  color: var(--mwi-text);
+}
+
+a {
+  color: var(--mwi-accent);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* -------------------------
+   Application layout
+   ------------------------- */
+
+.mwi-app {
+  width: min(1600px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.mwi-app__header {
+  margin-bottom: 24px;
+}
+
+.mwi-app__eyebrow,
+.hud__eyebrow {
+  margin: 0 0 8px;
+  color: var(--mwi-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.mwi-app__header h1 {
+  margin: 0;
+  color: #f7faff;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+
+.mwi-app__header > p:last-child {
+  max-width: 720px;
+  margin: 12px 0 0;
+  color: var(--mwi-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.mwi-app__workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.9fr);
+  align-items: start;
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.mwi-app__map {
+  position: relative;
+  min-width: 0;
+  min-height: 480px;
+  overflow: hidden;
+  border: 1px solid var(--mwi-border);
+  border-radius: var(--mwi-radius);
+  background: #111824;
+  box-shadow: var(--mwi-shadow);
+}
+
+.mwi-app__map .leaflet-container {
+  width: 100%;
+  height: min(72vh, 780px);
+  min-height: 480px;
+  background: #111824;
+}
+
+.mwi-app__map .leaflet-control-attribution {
+  font-size: 10px;
+}
+
+/* -------------------------
+   HUD
+   ------------------------- */
+
+.hud {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--mwi-border);
+  border-radius: var(--mwi-radius);
+  background: linear-gradient(
+    135deg,
+    rgb(23 34 53 / 96%),
+    rgb(13 21 34 / 98%)
+  );
+  box-shadow: var(--mwi-shadow);
+}
+
+.hud__header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hud__title {
+  margin: 0;
+  color: #f7faff;
+  font-size: 1.25rem;
+}
+
+.hud__status {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--mwi-border);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 3%);
+  color: var(--mwi-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hud__status--ready {
+  border-color: rgb(74 222 128 / 35%);
+  background: rgb(74 222 128 / 9%);
+  color: var(--mwi-success);
+}
+
+.hud__status--pending {
+  color: #fbbf24;
+}
+
+.hud__section {
+  min-width: 0;
+  padding-left: 16px;
+  border-left: 1px solid var(--mwi-border);
+}
+
+.hud__section h3 {
+  margin: 0 0 14px;
+  color: #f2f6ff;
+  font-size: 0.92rem;
+}
+
+.hud__section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hud__section-heading > span {
+  color: var(--mwi-muted);
+  font-size: 0.72rem;
+}
+
+.hud__details {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.hud__details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.hud__details dt {
+  color: var(--mwi-muted);
+  font-size: 0.76rem;
+}
+
+.hud__details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--mwi-text);
+  font-size: 0.9rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud__error {
+  margin: 14px 0 0;
+  color: var(--mwi-danger);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* -------------------------
+   Control panel
+   ------------------------- */
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.control-panel > section,
+.control-panel > div,
+.navigation-panel,
+.mission-dashboard {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--mwi-border);
+  border-radius: var(--mwi-radius);
+  background: var(--mwi-surface);
+  box-shadow: var(--mwi-shadow);
+}
+
+.control-panel h2,
+.navigation-panel h2,
+.mission-dashboard h2 {
+  margin-top: 0;
+  color: #f7faff;
+  font-size: 1.2rem;
+}
+
+.control-panel h3,
+.navigation-panel h3,
+.mission-dashboard h3 {
+  color: #dce8f8;
+  font-size: 0.95rem;
+}
+
+.control-panel p,
+.navigation-panel p,
+.mission-dashboard p {
+  color: var(--mwi-muted);
+  line-height: 1.6;
+}
+
+/* -------------------------
+   Forms and controls
+   ------------------------- */
+
+.control-panel label,
+.navigation-panel label,
+.mission-dashboard label,
+.mission-dashboard form label {
+  display: block;
+  margin-bottom: 7px;
+  color: #dce8f8;
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.control-panel input,
+.control-panel select,
+.control-panel textarea,
+.navigation-panel input,
+.navigation-panel select,
+.navigation-panel textarea,
+.mission-dashboard input,
+.mission-dashboard select,
+.mission-dashboard textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #34445d;
+  border-radius: 9px;
+  outline: none;
+  background: #0b1321;
+  color: var(--mwi-text);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.control-panel input:focus,
+.control-panel select:focus,
+.control-panel textarea:focus,
+.navigation-panel input:focus,
+.navigation-panel select:focus,
+.navigation-panel textarea:focus,
+.mission-dashboard input:focus,
+.mission-dashboard select:focus,
+.mission-dashboard textarea:focus {
+  border-color: var(--mwi-accent-strong);
+  box-shadow: 0 0 0 3px rgb(112 214 255 / 12%);
+}
+
+.control-panel button,
+.navigation-panel button,
+.mission-dashboard button {
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid var(--mwi-accent-strong);
+  border-radius: 9px;
+  background: var(--mwi-accent-strong);
+  color: #06111b;
+  font-weight: 750;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.control-panel button:hover:not(:disabled),
+.navigation-panel button:hover:not(:disabled),
+.mission-dashboard button:hover:not(:disabled) {
+  border-color: var(--mwi-accent);
+  background: var(--mwi-accent);
+}
+
+.control-panel button:active:not(:disabled),
+.navigation-panel button:active:not(:disabled),
+.mission-dashboard button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.control-panel button:focus-visible,
+.navigation-panel button:focus-visible,
+.mission-dashboard button:focus-visible {
+  outline: 2px solid var(--mwi-accent);
+  outline-offset: 3px;
+}
+
+.control-panel input[type="checkbox"],
+.mission-dashboard input[type="checkbox"] {
+  display: inline-block;
+  width: auto;
+  min-height: auto;
+  accent-color: var(--mwi-accent-strong);
+}
+
+/* -------------------------
+   Route and mission summaries
+   ------------------------- */
+
+.navigation-panel dl,
+.mission-dashboard dl {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.navigation-panel dl > div,
+.mission-dashboard dl > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--mwi-border);
+}
+
+.navigation-panel dt,
+.mission-dashboard dt {
+  color: var(--mwi-muted);
+  font-size: 0.82rem;
+}
+
+.navigation-panel dd,
+.mission-dashboard dd {
+  margin: 0;
+  color: var(--mwi-text);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-align: right;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.navigation-panel [role="alert"],
+.mission-dashboard [role="alert"] {
+  color: var(--mwi-danger);
+  font-size: 0.85rem;
+}
+
+/* Space between form fields when components use native forms. */
+
+.navigation-panel form,
+.mission-dashboard form {
+  display: grid;
+  gap: 15px;
+}
+
+.navigation-panel form button,
+.mission-dashboard form button {
+  width: 100%;
+}
+
+/* -------------------------
+   Route metrics
+   ------------------------- */
+
+.route-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.route-metrics__item {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--mwi-border);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 2%);
+}
+
+.route-metrics__label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--mwi-muted);
+  font-size: 0.75rem;
+}
+
+.route-metrics__value {
+  color: var(--mwi-text);
+  font-size: 1rem;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+/* -------------------------
+   Leaflet controls
+   ------------------------- */
+
+.leaflet-bar,
+.leaflet-control-layers {
+  border: 1px solid var(--mwi-border) !important;
+  border-radius: 8px !important;
+  background: var(--mwi-surface) !important;
+  color: var(--mwi-text) !important;
+}
+
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  border-color: var(--mwi-border) !important;
+  background: var(--mwi-surface) !important;
+  color: var(--mwi-text) !important;
+}
+
+.leaflet-tooltip {
+  border: 1px solid var(--mwi-border);
+  border-radius: 6px;
+  background: #111a29;
+  color: var(--mwi-text);
+  box-shadow: var(--mwi-shadow);
+}
+
+.leaflet-tooltip-top::before {
+  border-top-color: #111a29;
+}
+
+/* -------------------------
+   Responsive layout
+   ------------------------- */
+
+@media (max-width: 1100px) {
+  .mwi-app {
+    padding: 20px;
+  }
+
+  .hud {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hud__section {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .mwi-app__workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mwi-app__map .leaflet-container {
+    height: 58vh;
+    min-height: 400px;
+  }
+
+  .control-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+@media (max-width: 640px) {
+  .mwi-app {
+    padding: 14px;
+  }
+
+  .mwi-app__header {
+    margin-bottom: 18px;
+  }
+
+  .mwi-app__header h1 {
+    font-size: 1.8rem;
+  }
+
+  .hud {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .hud__section {
+    padding-top: 16px;
+    border-top: 1px solid var(--mwi-border);
+  }
+
+  .mwi-app__workspace {
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .mwi-app__map {
+    min-height: 340px;
+  }
+
+  .mwi-app__map .leaflet-container {
+    height: 48vh;
+    min-height: 340px;
+  }
+
+  .control-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .control-panel > section,
+  .control-panel > div,
+  .navigation-panel,
+  .mission-dashboard {
+    padding: 16px;
+  }
+
+  .route-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
