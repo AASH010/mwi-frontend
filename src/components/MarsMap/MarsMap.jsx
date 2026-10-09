@@ -1,4 +1,4 @@
-```jsx
+jsx
 import { useMemo } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -129,4 +129,4 @@ export default function MarsMap({
     </div>
   );
 }
-```
+
