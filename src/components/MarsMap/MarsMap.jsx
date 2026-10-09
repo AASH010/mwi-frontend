@@ -1,11 +1,7 @@
-
+```jsx
 import { useMemo } from "react";
 import L from "leaflet";
-import {
-  GeoJSON,
-  MapContainer,
-  TileLayer,
-} from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 
 import "leaflet/dist/leaflet.css";
 
@@ -16,23 +12,31 @@ import {
   TILE_MATRIX_HEIGHT,
 } from "../../utils/marsCRS.js";
 
+import AOILayer from "./AOILayer.jsx";
+import StartMarker from "./StartMarker.jsx";
+import GoalMarker from "./GoalMarker.jsx";
+import RouteLayer from "./RouteLayer.jsx";
+
 /**
  * MarsWalk Intelligence map component.
  *
  * Coordinate conventions:
- * - Mars map coordinates: projected (x, y), in metres.
- * - Leaflet LatLng representation: lat = Mars y, lng = Mars x.
- * - Raster tiles: standard XYZ tile addressing.
+ * - Projected Mars coordinates: (x, y), in metres.
+ * - Leaflet positions: [y, x].
+ * - Backend GeoJSON coordinates: [x, y].
+ * - Terrain grid coordinates: [row, col], handled by navigation logic.
  *
- * routeGeoJSON is optional. When supplied, its coordinates must be
- * projected Mars coordinates returned by the backend, not geographic
- * longitude/latitude in degrees.
- *
- * Set VITE_BACKEND_URL when the frontend and backend are served from
- * different origins and no development proxy is configured.
+ * This component composes the map layers. It does not request routes
+ * or convert marker positions to terrain-grid indices.
  */
 export default function MarsMap({
   routeGeoJSON = null,
+  startPosition = null,
+  goalPosition = null,
+  onStartPositionChange,
+  onGoalPositionChange,
+  markersDraggable = true,
+  showAOI = true,
   tileUrl,
   initialZoom = 2,
   className,
@@ -43,7 +47,8 @@ export default function MarsMap({
       return tileUrl;
     }
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, "");
+    const backendUrl =
+      import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, "");
 
     return backendUrl
       ? `${backendUrl}${MARS_MAP_CONFIG.tileUrl}`
@@ -105,18 +110,23 @@ export default function MarsMap({
           noWrap
         />
 
-        {routeGeoJSON && (
-          <GeoJSON
-            key={JSON.stringify(routeGeoJSON)}
-            data={routeGeoJSON}
-            style={() => ({
-              color: "#ff6b35",
-              weight: 4,
-              opacity: 0.9,
-            })}
-          />
-        )}
+        {showAOI && <AOILayer />}
+
+        <StartMarker
+          position={startPosition}
+          onPositionChange={onStartPositionChange}
+          draggable={markersDraggable}
+        />
+
+        <GoalMarker
+          position={goalPosition}
+          onPositionChange={onGoalPositionChange}
+          draggable={markersDraggable}
+        />
+
+        <RouteLayer routeGeoJSON={routeGeoJSON} />
       </MapContainer>
     </div>
   );
 }
+```
