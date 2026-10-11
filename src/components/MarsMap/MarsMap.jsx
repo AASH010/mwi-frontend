@@ -1,4 +1,3 @@
-jsx
 import { useMemo } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -17,18 +16,6 @@ import StartMarker from "./StartMarker.jsx";
 import GoalMarker from "./GoalMarker.jsx";
 import RouteLayer from "./RouteLayer.jsx";
 
-/**
- * MarsWalk Intelligence map component.
- *
- * Coordinate conventions:
- * - Projected Mars coordinates: (x, y), in metres.
- * - Leaflet positions: [y, x].
- * - Backend GeoJSON coordinates: [x, y].
- * - Terrain grid coordinates: [row, col], handled by navigation logic.
- *
- * This component composes the map layers. It does not request routes
- * or convert marker positions to terrain-grid indices.
- */
 export default function MarsMap({
   routeGeoJSON = null,
   startPosition = null,
@@ -47,8 +34,7 @@ export default function MarsMap({
       return tileUrl;
     }
 
-    const backendUrl =
-      import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, "");
+    const backendUrl = import.meta.env.VITE_BACKEND_URL?.replace(/\/$/, "");
 
     return backendUrl
       ? `${backendUrl}${MARS_MAP_CONFIG.tileUrl}`
