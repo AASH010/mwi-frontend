@@ -638,3 +638,199 @@ a {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+/* -------------------------
+   Control panel tabs
+   ------------------------- */
+
+.control-panel__tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--mwi-border);
+  border-radius: var(--mwi-radius);
+  background: #0b1321;
+}
+
+.control-panel .control-panel__tab {
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--mwi-muted);
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.control-panel .control-panel__tab:hover:not(:disabled) {
+  border-color: var(--mwi-border);
+  background: var(--mwi-surface-raised);
+  color: var(--mwi-text);
+}
+
+.control-panel .control-panel__tab.is-active {
+  border-color: rgb(112 214 255 / 30%);
+  background: rgb(112 214 255 / 12%);
+  color: var(--mwi-accent);
+}
+
+.control-panel .control-panel__tab:focus-visible {
+  outline: 2px solid var(--mwi-accent);
+  outline-offset: 3px;
+}
+
+.control-panel__content {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Keep the selected panel at the full available width. */
+.control-panel__content > .navigation-panel,
+.control-panel__content > .mission-dashboard {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+/* The map remains above the panel on smaller screens. */
+@media (max-width: 1100px) {
+  .mwi-app__workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .control-panel__tabs {
+    position: sticky;
+    top: 8px;
+    z-index: 10;
+  }
+
+  .control-panel .control-panel__tab {
+    min-height: 46px;
+    padding: 10px 8px;
+  }
+}
+
+
+
+/* ================================
+   Mission control tabs
+   ================================ */
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* Tab navigation bar */
+.control-panel__tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid var(--mwi-border);
+  border-radius: var(--mwi-radius);
+  background: var(--mwi-surface);
+  box-shadow: var(--mwi-shadow);
+}
+
+/* Individual tab buttons */
+.control-panel__tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--mwi-radius) * 0.7);
+  background: transparent;
+  color: var(--mwi-text, inherit);
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.control-panel__tab:hover {
+  background: var(--mwi-surface-hover, rgba(127, 127, 127, 0.08));
+}
+
+.control-panel__tab.is-active {
+  border-color: var(--mwi-border);
+  background: var(--mwi-surface-raised, var(--mwi-surface));
+  color: var(--mwi-text, inherit);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.control-panel__tab:focus-visible {
+  outline: 2px solid var(--mwi-accent, #c45d35);
+  outline-offset: 2px;
+}
+
+/* Tab panel wrappers */
+.control-panel__content {
+  min-width: 0;
+}
+
+/* The inactive panel is hidden without unmounting its component. */
+.control-panel__content[hidden] {
+  display: none !important;
+}
+
+/* Keep the existing panel card styling on the actual content. */
+.control-panel__content > .navigation-panel,
+.control-panel__content > .mission-dashboard {
+  min-width: 0;
+  width: 100%;
+}
+
+/* Prevent responsive workspace rules from turning the tab panel
+   into an unintended multi-column layout. */
+@media (max-width: 1100px) {
+  .control-panel {
+    display: flex;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .control-panel__tabs {
+    gap: 6px;
+    padding: 5px;
+  }
+
+  .control-panel__tab {
+    min-height: 42px;
+    padding: 9px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .control-panel__tab {
+    transition: none;
+  }
+}
