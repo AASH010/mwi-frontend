@@ -34,15 +34,23 @@ const VALID_MODES = new Set([
 ]);
 
 function isValidMetrics(properties) {
+  if (
+    properties === null ||
+    typeof properties !== "object" ||
+    typeof properties.mode !== "string"
+  ) {
+    return false;
+  }
+
+  const normalizedMode = properties.mode.trim().toLowerCase();
+
   return (
-    properties !== null &&
-    typeof properties === "object" &&
+    VALID_MODES.has(normalizedMode) &&
     METRIC_DEFINITIONS.every(
       ({ key }) =>
         typeof properties[key] === "number" &&
         Number.isFinite(properties[key])
-    ) &&
-    VALID_MODES.has(properties.mode)
+    )
   );
 }
 
@@ -56,6 +64,7 @@ export default function RouteMetrics({
 }) {
   const feature = routeGeoJSON?.features?.find(
     (item) =>
+      item?.type === "Feature" &&
       item?.geometry?.type === "LineString" &&
       isValidMetrics(item.properties)
   );
@@ -64,19 +73,22 @@ export default function RouteMetrics({
     return (
       <section className={className} aria-live="polite">
         <h2>Route metrics</h2>
-        <p>No route metrics available. Calculate a valid route first.</p>
+        <p>
+          No route metrics available. Calculate a valid route first.
+        </p>
       </section>
     );
   }
 
   const { properties } = feature;
+  const normalizedMode = properties.mode.trim().toLowerCase();
 
   return (
     <section className={className} aria-live="polite">
       <h2>Route metrics</h2>
 
       <p>
-        Mode: <strong>{properties.mode}</strong>
+        Mode: <strong>{normalizedMode}</strong>
       </p>
 
       <dl>
