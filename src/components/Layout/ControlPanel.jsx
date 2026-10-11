@@ -1,5 +1,5 @@
-import NavigationPanel from "./Navigation/NavigationPanel.jsx";
-import MissionDashboard from "./Mission/MissionDashboard.jsx";
+import NavigationPanel from "../Navigation/NavigationPanel.jsx";
+import MissionDashboard from "../Mission/MissionDashboard.jsx";
 
 /**
  * MarsWalk Intelligence control panel.
@@ -50,3 +50,4 @@ export default function ControlPanel({
     </aside>
   );
 }
+
