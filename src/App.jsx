@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 
 import MarsMap from "./components/MarsMap/MarsMap.jsx";
-import HUD from "./components/layout/HUD.jsx";
-import ControlPanel from "./components/layout/ControlPanel.jsx";
+import HUD from "./components/Layout/HUD.jsx";
+import ControlPanel from "./components/Layout/ControlPanel.jsx";
 
 import { calculateRoute } from "./services/navigationApi.js";
 import { estimateMissionConsumables } from "./services/missionApi.js";
